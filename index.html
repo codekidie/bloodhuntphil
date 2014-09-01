@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
 
@@ -12,34 +13,160 @@
 	<script src="js/jquery.js"></script>
 	<script src="_assets/js/index.js"></script>
 	<script src="js/jquery.mobile-1.4.2.min.js"></script>
+
+	<script>
+		$( document ).on( "pagecreate", "#demo-page", function() {
+
+			$( document ).on( "swipeleft swiperight", "#demo-page", function( e ) {
+				// We check if there is no open panel on the page because otherwise
+				// a swipe to close the left panel would also open the right panel (and v.v.).
+				// We do this by checking the data that the framework stores on the page element (panel: open).
+				if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+					if ( e.type === "swipeleft" ) {
+						$( "#right-panel" ).panel( "open" );
+					} else if ( e.type === "swiperight" ) {
+						$( "#left-panel" ).panel( "open" );
+					}
+				}
+			});
+		});
+    </script>
+	<style>
+		/* Swipe works with mouse as well but often causes text selection. */
+		#demo-page * {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			-o-user-select: none;
+			user-select: none;
+		}
+		/* Content styling. */
+		dl { font-family: "Times New Roman", Times, serif; padding: 1em; }
+		dt { font-size: 2em; font-weight: bold; }
+		dt span { font-size: .5em; color: #777; margin-left: .5em; }
+		dd { font-size: 1.25em;	margin: 1em 0 0; padding-bottom: 1em; border-bottom: 1px solid #eee; }
+		.back-btn { float: right; margin: 0 2em 1em 0; }
+	</style>
 </head>
 
 <body>
 
-<div data-role="page">
+<!-- Start of first page: #one -->
+<div data-role="page" id="one">
 
 	<div data-role="header">
-		<h1>Bloodhuntphil</h1>
+		<h1></h1>
 	</div><!-- /header -->
 
-	<div role="main" class="ui-content">
-		<center>
-		<img src="_assets/img/logo.jpg" alt="" style="width:100%;">
+	<div role="main" class="ui-content" >
+		<img src="logo.jpg" alt="" style="width:100%;">
 		</center>
 		<label for="text-basic">Username:</label>
 		<input type="text" name="text-basic" id="text-basic" value="">
 		<label for="text-basic">Password:</label>
 		<input type="password" name="text-basic" id="text-basic" value="">
-		<a href="#" class="ui-shadow ui-btn ui-corner-all">Login</a>
-		<button class="ui-shadow ui-btn ui-corner-all">Sign Up</button>
+
+		<p><a href="#two" class="ui-btn ui-shadow ui-corner-all">Login</a></p>
+		<p><a href="#popup" class="ui-btn ui-shadow ui-corner-all" data-rel="dialog" data-transition="pop">Sign Up</a></p>
+	</div><!-- /content -->
+
+	<div data-role="footer" data-theme="a">
+		<h4>Copyrights Reserved 2014</h4>
+	</div><!-- /footer -->
+</div><!-- /page one -->
+
+<!-- Start of second page: #two -->
+<div data-role="page" id="two" data-theme="a" data-url="demo-page">
+	<div data-role="header" data-theme="b">
+        <h1>Bloodhuntphil</h1>
+        <a href="#left-panel" data-icon="carat-r" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open left panel</a>
+        <a href="#right-panel" data-icon="carat-l" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon">Open right panel</a>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+        <dl>
+            <dt>Swipe To View Menu</dt>
+            
+        </dl>
+        <a href="#demo-intro" data-rel="back" class="back-btn ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-right">Back</a>
+    </div><!-- /content -->
+    <div data-role="panel" id="left-panel" data-theme="b">
+        <p>Left reveal panel.</p>
+        <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right">Close</a>
+    </div><!-- /panel -->
+    <div data-role="panel" id="right-panel" data-display="push" data-position="right" data-theme="b">
+        <p>Right push panel.</p>
+        <a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-right">Close</a>
+    </div><!-- /panel -->
+</div><!-- /page two -->
+
+<!-- Start of third page: #popup -->
+<div data-role="page" id="popup">
+
+	<div data-role="header" data-theme="b">
+		<h1>Sign Up Form</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<form>
+		        <div style="padding:10px 20px;">
+		           
+		            <label for="un" class="ui-hidden-accessible">Username:</label>
+		            <input type="text" name="user" id="un" value="" placeholder="username" data-theme="a">
+		            <label for="pw" class="ui-hidden-accessible">Password:</label>
+		            <input type="password" name="pass" id="pw" value="" placeholder="password" data-theme="a">
+		            <label for="un" class="ui-hidden-accessible">First Name:</label>
+		            <input type="text" name="user" id="un" value="" placeholder="first name" data-theme="a">
+		            <label for="un" class="ui-hidden-accessible">Middle Name:</label>
+		            <input type="text" name="user" id="un" value="" placeholder="middle name" data-theme="a">
+		            <label for="un" class="ui-hidden-accessible">Last Name:</label>
+		            <input type="text" name="user" id="un" value="" placeholder="last name" data-theme="a">
+					<label for="select-choice-a" class="select">Gender:</label>
+					<select name="select-choice-a" id="select-choice-a" data-native-menu="false">
+					    <option value="MALE">MALE</option>
+					    <option value="FEMALE">FEMALE</option>
+					</select>
+
+					<label for="select-choice-a" class="select">Blood Type:</label>
+					<select name="select-choice-a" id="select-choice-a" data-native-menu="false">
+					    <option value="A">A</option>
+					    <option value="B">B</option>
+					    <option value="AB">AB</option>
+					    <option value="O">O</option>
+
+					</select>
+					<label for="un" class="ui-hidden-accessible">Contact Number:</label>
+		            <input type="text" name="user" id="un" value="" placeholder="contact number" data-theme="a">
+
+		            <label for="un" class="ui-hidden-accessible">Email :</label>
+		            <input type="text" name="user" id="un" value="" placeholder="email" data-theme="a">
+					 
+					<label for="select-choice-a" class="select">Status :</label>
+					<select name="select-choice-a" id="select-choice-a" data-native-menu="false">
+					    <option value="Single">Single</option>
+					    <option value="Divorced">Divorced</option>
+					    <option value="Relationship">In A Relationship</option>
+					    <option value="Widdowed">Widdowed</option>
+
+					</select>
+					
+					<label for="un" class="ui-hidden-accessible">Health Condition :</label>
+		            <input type="text" name="user" id="un" value="" placeholder="health condition" data-theme="a">
+	
+		            <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Submit Registration</button>
+		        	<a href="#one" data-rel="back" class="ui-btn ui-shadow ui-corner-all ui-icon-back ui-btn-icon-left">Cancel</a></p>
+		        </div>
+		    </form>
+		
+
 		
 	</div><!-- /content -->
 
 	<div data-role="footer">
 		<h4>Copyrights Reserved 2014</h4>
 	</div><!-- /footer -->
-
-</div><!-- /page -->
+</div><!-- /page popup -->
 
 </body>
 </html>
+
+
